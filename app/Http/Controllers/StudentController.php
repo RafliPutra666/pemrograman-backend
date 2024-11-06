@@ -34,6 +34,8 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
+        
+
         $input = [
             'nama' => $request->nama,
             'nim' => $request->nim,
@@ -55,7 +57,21 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $students = Student::find($id);
+
+        if ($students) {
+            $data = [
+                'message' => 'Get all resource student',
+                'data' => $students
+            ];
+            return response()->json($data,200);
+        }
+        else{
+            $data = [
+                'message' => 'Get all resource student',
+            ];
+            return response()->json($data,404);
+        }
     }
 
     /**
@@ -71,25 +87,31 @@ class StudentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $student = Student::find($id);
+        $students = Student::find($id);
 
        
-        // Perbarui data mahasiswa
-        $student->update ([
-            'id' => $request->id,
-            'nama' => $request->nama,
-            'nim' => $request->nim,
-            'jurusan' => $request->jurusan,
-            'email' => $request->email
-        ]);
-    
-        // Berikan respon
-        $data = [
-            'message' => 'Student updated successfully',
-            'data' => $student
-        ];
-    
-        return response()->json($data, 200);
+        if ($students) {
+            $input = [
+                'nama' => $request->nama,
+                'nim' => $request->nim,
+                'jurusan' => $request->jurusan,
+                'email' => $request->email
+            ];
+            $students -> update($input);
+
+            $data = [
+                'message' => 'Get all resource student',
+                'data' => $students
+            ];
+
+            return response()->json($data,200);
+        }
+        else{
+            $data = [
+                'message' => 'Get all resource student',
+            ];
+            return response()->json($data,404);
+        }
     }
 
     /**
@@ -97,17 +119,22 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        $student = Student::find($id);
+        $students = Student::find($id);
+        if ($students) {
 
-    // Hapus data mahasiswa
-    $student->delete();
+            $students -> delete();
 
-    // Berikan respon
-    $data = [
-        'message' => 'Student deleted successfully',
-        'data' => $student
-    ];
-
-    return response()->json($data, 200);
+            $data = [
+                'message' => 'Get all resource student',
+                'data' => $students
+            ];
+            return response()->json($data,200);
+        }
+        else{
+            $data = [
+                'message' => 'Get all resource student',
+            ];
+            return response()->json($data,404);
+        }
     }
 }
