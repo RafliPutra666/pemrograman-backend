@@ -42,10 +42,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `nama`, `nim`, `email`, `jurusan`, `created_at`, `updated_at`) VALUES
-(1, 'Muhammad Syahrul', '0110223056', 'sahrulloji05@gmail.com', 'Teknik Informatika', '2024-12-26 13:15:59', '2024-12-26 14:42:13'),
-(3, 'aufa', '0110215', 'yahya@gmail.com', 'Informatika', '2024-12-26 13:15:59', '2024-12-26 13:15:59'),
-(4, 'Aufa', '888', 'aufaroot18@gmail.com', 'Sistem Informasi', '2024-12-26 14:18:50', '2024-12-26 14:18:50'),
-(5, 'Muhammad Syahrul', '0110223056', 'sahrulloji05@gmail.com', 'Teknik Informatika', '2024-12-26 14:40:59', '2024-12-26 14:40:59');
+(1, 'Muhammad Rafli', '0110223176', 'rafliputra@gmail.com', 'Teknik Informatika', '2024-12-26 13:15:59', '2024-12-26 14:42:13'),
 
 --
 -- Indexes for dumped tables
