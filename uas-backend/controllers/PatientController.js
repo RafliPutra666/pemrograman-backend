@@ -68,7 +68,7 @@ class PatientController {
       const patients = await Patient.delete(id); 
       const data = { 
         message: "Resource is deleted successfully", 
-        data: patients, // data pasien yang sudah dihapus 
+        data: patients,
       }; 
       res.status(200).json(data); // mengirimkan respons status 200 setelah penghapusan 
     } catch (error) { 
@@ -80,9 +80,114 @@ class PatientController {
     } 
   }
   
+  async show(req, res) {
+    const { id } = req.params;
+    try {
+      const patient = await Patient.find(id);
+      const data = {
+        message: `Menampilkan data patient dengan id ${id}`,
+        data: patient,
+      };
+      return res.status(200).json(data);
+    } catch (err) {
+      // catch untuk menangkap error
+      const data = {
+        message: "Resource Not Found",
+        error: err.message,
+      };
+      res.status(404).json(data);
+    }
+  }
 
+  async search(req, res) {
+    const { name } = req.params;
+  
+    try {
+      // Memastikan nama yang diterima adalah string yang valid
+      const patients = await Patient.search(name);
+      console.log(patients);  // Log hasil pencarian
+      
+      if (patients.length === 0) {
+        return res.status(404).json({
+          message: "Pasien tidak ditemukan",
+        });
+      }
+  
+      res.status(200).json({
+        message: "Data pasien ditemukan",
+        data: patients,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Terjadi kesalahan saat mencari data pasien",
+        error: error.message,
+      });
+    }
+  }
 
-
+  async positive(req, res) {
+    try {
+      const patients = await Patient.findByStatus("positive");
+      if (patients.length === 0) {
+        return res.status(404).json({
+          message: "Pasien dengan status 'positive' tidak ditemukan",
+        });
+      }
+  
+      return res.status(200).json({
+        message: `Menampilkan data pasien dengan status Positive`,
+        data: patients,
+      });
+    } catch (err) {
+      const data = {
+        message: "Terjadi kesalahan",
+        error: err.message,
+      };
+      res.status(500).json(data);
+    }
+  }
+  async recovered(req, res) {
+    try {
+      const patients = await Patient.findByStatus("recovered");
+      if (patients.length === 0) {
+        return res.status(404).json({
+          message: "Pasien dengan status 'recovered' tidak ditemukan",
+        });
+      }
+  
+      return res.status(200).json({
+        message: `Menampilkan data pasien dengan status Recovered`,
+        data: patients,
+      });
+    } catch (err) {
+      const data = {
+        message: "Terjadi kesalahan",
+        error: err.message,
+      };
+      res.status(500).json(data);
+    }
+  }
+  async dead(req, res) {
+    try {
+      const patients = await Patient.findByStatus("dead");
+      if (patients.length === 0) {
+        return res.status(404).json({
+          message: "Pasien dengan status 'dead' tidak ditemukan",
+        });
+      }
+  
+      return res.status(200).json({
+        message: `Menampilkan data pasien dengan status Dead`,
+        data: patients,
+      });
+    } catch (err) {
+      const data = {
+        message: "Terjadi kesalahan",
+        error: err.message,
+      };
+      res.status(500).json(data);
+    }
+  }
 
 
 

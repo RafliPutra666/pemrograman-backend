@@ -61,7 +61,72 @@ class Patient {
     }); 
   }
 
-
+  static find(id) {
+    // method untuk menampilkan data berdasarkan id
+    return new Promise((resolve, reject) => {
+      // lakukan query ke db untuk ambil data berdasarkan id
+      const sql = "SELECT * FROM patients WHERE id = ?";
+      db.query(sql, id, (err, results) => {
+        if (err) {
+          //jika error reject
+          reject(err);
+        } else {
+          //jika berhasil resolve
+          resolve(results[0]);
+        }
+      });
+    });
+  }
+  static search(name) {
+    return new Promise((resolve, reject) => {
+      const query = "SELECT * FROM patients WHERE name LIKE ?";
+      
+      // Pastikan db.query sudah sesuai dengan pengaturan koneksi database
+      db.query(query, [`%${name}%`], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      });
+    });
+  }
+  static findByStatus(positive) {
+    return new Promise((resolve, reject) => {
+      const sql = "SELECT * FROM patients WHERE status = ?";
+      db.query(sql, [positive], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      });
+    });
+  }
+  static findByStatus(recovered) {
+    return new Promise((resolve, reject) => {
+      const sql = "SELECT * FROM patients WHERE status = ?";
+      db.query(sql, [recovered], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      });
+    });
+  }
+  static findByStatus(dead) {
+    return new Promise((resolve, reject) => {
+      const sql = "SELECT * FROM patients WHERE status = ?";
+      db.query(sql, [dead], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      });
+    });
+  }
 
 }
 
